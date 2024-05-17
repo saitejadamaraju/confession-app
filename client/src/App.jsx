@@ -3,6 +3,7 @@ import Header from './components/Header'
 import Body from './components/Body'
 import {Toaster} from 'react-hot-toast'
 import SendMessage from './components/SendMessage'
+import AccountCreation from './components/AccountCreation'
 
 function App() {
   
@@ -13,8 +14,9 @@ function App() {
         <Header/>
       </div>
       <div className="flex justify-center items-center">
-        <Body/>
+        {/* <Body/> */}
         {/* <SendMessage/> */}
+        <AccountCreation/>
       </div>
       <Toaster/>
     </div>
