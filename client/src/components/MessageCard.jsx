@@ -16,7 +16,7 @@ const MessageCard = ({data,setReload,reload}) =>
             <div className="w-[300px] sm:w-[300px] m-1 bg-[#FB9AD1] rounded-lg cursor-pointer">
                 {/* heading */}
                 <div className="h-[50px] sm:[75px] bg-[#FB9AD1] flex justify-between items-center p-1 rounded-lg">
-                    <p className="font-bold text-lg font-style: italic">💓 Message For You 💓</p>
+                    <p className="font-bold text-lg font-style: italic">💌 Message For You 💌</p>
                     <span onClick={()=>{removeConfession()}}><RxCross2 /></span>
                 </div>
                 {/* body */}
