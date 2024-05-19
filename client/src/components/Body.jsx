@@ -1,55 +1,65 @@
-import { useState } from "react";
 import MessageCard from "./MessageCard";
-import toast from "react-hot-toast";
+import useAppStore from "../zustand/useAppStore.js";
+import { useEffect, useState } from "react";
+import MessageCardShimmer from "./shimmerComponents/MessageCardShimmer.jsx";
 
 const Body = () =>
     {
+ 
+        const [confessions,setConfessions]=useState(null);
+        const {authUser} = useAppStore();
+        const [loading,setLoading]=useState(false);
+        const [reload,setReload]=useState(false);
+        
 
-        const [link,setLink] = useState("link");
-
-        const copyToClipBoard=()=>
+        const fetchConfessions = async ()=>{
+           
+           setLoading(true);
+        //    console.log("inside fetch confessions");
+      
+           const res = await fetch(`/api/user/confession/receive/${authUser?.username}`,{
+                method :'GET',
+                headers :{"Content-Type": "application/json"},
+            })
+                      
+           const json= await res.json();
+           setConfessions(json?.message);   
+           setLoading(false);       
+      } 
+        
+        useEffect(()=>
             {
-                navigator.clipboard.writeText(link)
-                .then(() => {
-                    toast.success('Link copied to clipboard');
-                })
-                .catch(err => {
-                    toast.error('error in copying link'+err);
-                });
-            }
+                console.log("body loading");
+                fetchConfessions();
+        
+            },[reload])
 
         return (
             <div >
-                <div className="h-[40px] bg-[#BC7FCD] p-2 flex items-center">
-                    <p className='font-semibold'>Share this link 👉 :</p>
-                    <p onClick={()=>copyToClipBoard()} className="ml-1 hover:text-blue-600 cursor-">{link}</p>
-                </div>
                 
                     {/* message cards */}
                     <div className="overflow-y-auto" style={{ maxHeight: "calc(100vh - 100px)" }}>
                     <div className="flex flex-wrap justify-center p-1">
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
-                        <MessageCard/>
+                    { 
+                        loading ? (
+                            <>
+                                <MessageCardShimmer />
+                                <MessageCardShimmer />
+                                <MessageCardShimmer />
+                                <MessageCardShimmer />
+                                <MessageCardShimmer />
+                                <MessageCardShimmer />
+                            </>
+                                    ) : confessions && confessions.length > 0 ? (
+                                        confessions.map((confession) => (
+                                        <MessageCard key={confession._id} data={confession} setReload={setReload} reload={reload}/>
+                                        ))
+                                    ) : (
+                                        <div className="text-xl font-bold text-pink-600 font-style: italic">
+                                        No confessions yet.
+                                        </div>
+                                    )
+                    }
                     </div>
                     </div>
                     
