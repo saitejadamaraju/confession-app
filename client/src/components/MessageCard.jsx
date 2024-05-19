@@ -6,7 +6,7 @@ const MessageCard = ({data,setReload,reload}) =>
         const {deleteConfession} = useDeleteConfessions();
         const removeConfession= async ()=>
         {
-             console.log("delete confession");
+             //console.log("delete confession");
              await deleteConfession(data?._id);
              setReload(!reload);
         }

@@ -29,7 +29,7 @@ const Body = () =>
         
         useEffect(()=>
             {
-                console.log("body loading");
+                //console.log("body loading");
                 fetchConfessions();
         
             },[reload])
