@@ -13,9 +13,10 @@ const userSchema = new mongoose.Schema({
         minlength:6
     },
     confessions: [{
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Confession"
     }]
-});
+},{timestamps:true});
 
 
 
